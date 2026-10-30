@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101a16">
+  <meta name="description" content="CozySMP — Survival for fun. Một thế giới Minecraft ấm áp, nơi bạn xây dựng, khám phá và chơi cùng bạn bè.">
+  <title>CozySMP — Survival for Fun</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#101a16;--panel:#17251e;--panel2:#1d3026;--green:#a6e3a1;--lime:#d2f5a5;--text:#f2f5ed;--muted:#a8b8ac;--line:rgba(210,245,165,.13)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:86px}
+    body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;z-index:-1;background-image:radial-gradient(#b7d9a8 1px,transparent 1px);background-size:34px 34px}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .nav{height:78px;position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 max(6vw,24px);background:rgba(16,26,22,.78);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+    .nav.scrolled{border-color:var(--line);height:68px}
+    .brand{display:flex;align-items:center;gap:11px;font:700 21px "Space Grotesk";letter-spacing:-.7px}
+    .brand-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#d2f5a5,#65a878);display:grid;place-items:center;color:#132219;box-shadow:0 6px 22px #a6e3a133}
+    .brand span span{color:var(--green)}
+    .nav-links{display:flex;gap:30px;color:#c0cec3;font-size:14px;font-weight:600}
+    .nav-links a{transition:.2s}.nav-links a:hover{color:var(--lime)}
+    .nav-cta,.btn{border:0;border-radius:12px;padding:12px 18px;background:var(--lime);color:#142019;font-weight:800;cursor:pointer;transition:transform .2s,box-shadow .2s}
+    .nav-cta:hover,.btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px #a6e3a133}
+    .hero{min-height:780px;padding:155px max(7vw,24px) 95px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;position:relative;isolation:isolate}
+    .hero:after{content:"";position:absolute;z-index:-1;width:520px;height:520px;right:10%;top:110px;border-radius:50%;background:#8acb7830;filter:blur(100px)}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:#a6e3a10d;padding:8px 13px;border-radius:999px;color:var(--green);font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+    .pulse{width:7px;height:7px;border-radius:50%;background:#a6e3a1;box-shadow:0 0 0 5px #a6e3a122;animation:pulse 1.8s infinite}
+    h1{font:700 clamp(54px,7vw,92px)/.98 "Space Grotesk";letter-spacing:-5px;margin:25px 0 22px}
+    h1 em{font-style:normal;color:var(--lime)}
+    .lead{max-width:520px;color:var(--muted);font-size:17px;line-height:1.8}
+    .hero-actions{display:flex;gap:13px;align-items:center;margin-top:32px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 20px}
+    .btn.secondary{background:#ffffff0b;border:1px solid var(--line);color:var(--text)}
+    .btn.secondary:hover{background:#ffffff13}
+    .server-mini{display:flex;align-items:center;gap:12px;margin-top:38px;color:var(--muted);font-size:13px}
+    .server-mini strong{display:block;color:var(--text);font-size:14px;margin-bottom:3px}
+    .mini-icon{width:43px;height:43px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-size:21px}
+    .hero-art{position:relative;min-height:475px;display:grid;place-items:center}
+    .art-frame{width:min(100%,540px);height:420px;border-radius:28px;overflow:hidden;position:relative;border:1px solid #d2f5a52b;box-shadow:0 35px 100px #0008;transform:rotate(2deg);transition:transform .5s}
+    .art-frame:hover{transform:rotate(0) scale(1.02)}
+    .art-frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.78)}
+    .art-frame:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0b1711d9,transparent 65%),linear-gradient(120deg,#a6e3a122,transparent 60%)}
+    .floating-card{position:absolute;z-index:2;bottom:14px;left:-20px;background:#1b2c22ed;border:1px solid var(--line);padding:15px 18px;border-radius:16px;box-shadow:0 15px 40px #0005;backdrop-filter:blur(12px);animation:float 4s ease-in-out infinite}
+    .floating-card small{color:var(--muted);font-size:11px;display:block;margin-bottom:5px}
+    .floating-card strong{font:700 18px "Space Grotesk"}
+    .floating-card.right{left:auto;right:-12px;bottom:90px;animation-delay:-2s}
+    .floating-card .dot{display:inline-block;width:7px;height:7px;background:#a6e3a1;border-radius:50%;margin-right:6px}
+    .section{padding:100px max(7vw,24px)}
+    .section-head{text-align:center;max-width:650px;margin:0 auto 48px}
+    .kicker{font-size:12px;color:var(--green);font-weight:800;letter-spacing:2px;text-transform:uppercase}
+    h2{font:700 clamp(34px,4vw,52px)/1.1 "Space Grotesk";letter-spacing:-2px;margin:13px 0}
+    .section-head p,.muted{color:var(--muted);line-height:1.75}
+    .status-wrap{max-width:950px;margin:auto;background:linear-gradient(135deg,#1b2b22,#15221b);border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:25px;align-items:center}
+    .status-title{display:flex;align-items:center;gap:13px}
+    .status-icon{width:54px;height:54px;border-radius:16px;background:#a6e3a11a;display:grid;place-items:center;font-size:25px}
+    .status-title h3{font:700 20px "Space Grotesk";margin-bottom:4px}
+    .status-title p{color:var(--muted);font-size:13px}
+    .status-data{display:flex;gap:35px;align-items:center}
+    .stat small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+    .stat strong{font:700 25px "Space Grotesk"}
+    .online{color:var(--green)}
+    .ip-row{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+    .ip-row small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+    .ip{font:600 16px "Space Grotesk";letter-spacing:.3px}
+    .copy{padding:11px 15px;border:1px solid var(--line);background:#ffffff0a;color:var(--text);border-radius:10px;font-weight:700;cursor:pointer;transition:.2s}
+    .copy:hover{background:var(--lime);color:#142019}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;max-width:1100px;margin:auto}
+    .feature{padding:27px;background:var(--panel);border:1px solid var(--line);border-radius:20px;transition:transform .25s,border-color .25s}
+    .feature:hover{transform:translateY(-8px);border-color:#a6e3a166}
+    .feature-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:#a6e3a117;font-size:23px;margin-bottom:22px}
+    .feature h3{font:700 19px "Space Grotesk";margin-bottom:9px}
+    .feature p{font-size:14px;color:var(--muted);line-height:1.7}
+    .banner{max-width:1100px;margin:auto;min-height:340px;border-radius:26px;overflow:hidden;position:relative;display:flex;align-items:center;padding:55px;background:#1c3024}
+    .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32}
+    .banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#101a16f2,#101a1680,transparent)}
+    .banner-content{position:relative;z-index:1;max-width:540px}
+    .banner-content p{color:#c2d0c4;line-height:1.7;margin:13px 0 24px}
+    footer{padding:35px max(7vw,24px);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center;color:var(--muted);font-size:13px}
+    footer strong{color:var(--text);font-family:"Space Grotesk"}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    .toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;background:var(--lime);color:#142019;padding:12px 18px;border-radius:12px;font-weight:800;font-size:13px;z-index:50;transition:.3s;pointer-events:none}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @keyframes pulse{50%{box-shadow:0 0 0 9px #a6e3a100}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    @media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:135px}.hero-art{min-height:390px}.art-frame{height:360px}.features{grid-template-columns:1fr 1fr}.status-wrap{grid-template-columns:1fr}.status-data{justify-content:flex-start}.ip-row{grid-column:auto}}
+    @media(max-width:600px){.nav{padding:0 20px}.nav-links{display:none}.nav-cta{padding:10px 13px;font-size:12px}.hero{padding-left:22px;padding-right:22px;min-height:auto}.hero h1{letter-spacing:-3px}.hero-art{min-height:330px}.art-frame{height:300px}.floating-card{left:-5px}.floating-card.right{right:-5px}.section{padding:75px 22px}.features{grid-template-columns:1fr}.status-wrap{padding:20px}.status-data{gap:25px}.stat strong{font-size:21px}.ip-row{align-items:flex-start;flex-direction:column}.banner{padding:30px;min-height:390px}footer{flex-direction:column;text-align:center}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a class="brand" href="#home"><span class="brand-mark">🌿</span><span>Cozy<span>SMP</span></span></a>
+    <div class="nav-links"><a href="#home">Trang chủ</a><a href="#status">Trạng thái</a><a href="#features">Trải nghiệm</a><a href="#join">Tham gia</a></div>
+    <a class="nav-cta" href="#join">Chơi ngay <span>↗</span></a>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> A cozy place to call home</div>
+        <h1>Survival<br><em>for fun.</em></h1>
+        <p class="lead">Không cần vội vàng. Không cần cạnh tranh. Chỉ cần bạn, những người bạn mới và một thế giới Minecraft rộng lớn đang chờ được khám phá.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#join">🌱 Khám phá server <span>→</span></a>
+          <a class="btn secondary" href="#status">Xem trạng thái</a>
+        </div>
+        <div class="server-mini"><div class="mini-icon">⛏️</div><div><strong>CozySMP · Minecraft Survival</strong><span>Build • Explore • Make memories</span></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="art-frame"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=85" alt="Khu rừng xanh yên bình"></div>
+        <div class="floating-card"><small>YOUR NEXT ADVENTURE</small><strong>Starts here ✨</strong></div>
+        <div class="floating-card right"><small><span class="dot"></span> SERVER STATUS</small><strong id="hero-status">Đang kiểm tra...</strong></div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="status">
+      <div class="section-head"><div class="kicker">Live server status</div><h2>Thế giới đang chờ bạn</h2><p>Theo dõi trạng thái máy chủ và số người chơi hiện tại theo thời gian thực.</p></div>
+      <div class="status-wrap">
+        <div class="status-title"><div class="status-icon">🟩</div><div><h3>CozySMP Network</h3><p id="status-text">Đang kết nối tới máy chủ...</p></div></div>
+        <div class="status-data">
+          <div class="stat"><small>Trạng thái</small><strong class="online" id="online-label">...</strong></div>
+          <div class="stat"><small>Người chơi</small><strong id="players">-- / --</strong></div>
+          <div class="stat"><small>Phiên bản</small><strong id="version">--</strong></div>
+        </div>
+        <div class="ip-row"><div><small>SERVER ADDRESS</small><div class="ip">cozysmp.io.vn</div></div><button class="copy" id="copy-btn">Copy IP　⧉</button></div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="features">
+      <div class="section-head"><div class="kicker">Why CozySMP?</div><h2>Chơi theo cách của bạn</h2><p>Một nơi để thư giãn, sáng tạo và tạo nên những câu chuyện của riêng mình.</p></div>
+      <div class="features">
+        <article class="feature"><div class="feature-icon">🏡</div><h3>Build your home</h3><p>Xây dựng căn nhà mơ ước, tạo một góc nhỏ của riêng bạn giữa thế giới rộng lớn.</p></article>
+        <article class="feature"><div class="feature-icon">🧭</div><h3>Explore together</h3><p>Khám phá hang động, quần xã sinh vật và những vùng đất mới cùng bạn bè.</p></article>
+        <article class="feature"><div class="feature-icon">🍃</div><h3>Chill & have fun</h3><p>Tận hưởng hành trình sinh tồn theo nhịp độ của bạn. Vui là chính, trải nghiệm là tất cả.</p></article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="join">
+      <div class="banner">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85" alt="Phong cảnh thiên nhiên">
+        <div class="banner-content"><div class="kicker">Your adventure awaits</div><h2>Gặp bạn trong game nhé!</h2><p>Thêm địa chỉ server vào Minecraft, rủ bạn bè và bắt đầu hành trình tại CozySMP ngay hôm nay.</p><button class="btn" id="copy-bottom">📋 Copy địa chỉ server</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div><strong>🌿 CozySMP</strong> <span> — Survival for fun.</span></div><div>Made with ♡ for the community · cozysmp.io.vn</div></footer>
+  <div class="toast" id="toast">Đã copy địa chỉ server!</div>
+
+  <script>
+    const SERVER = "cozysmp.io.vn";
+    const API = "https://api.mcstatus.io/v2/status/java/" + encodeURIComponent(SERVER);
+    const $ = (id) => document.getElementById(id);
+
+    async function updateStatus() {
+      try {
+        const response = await fetch(API, {cache:"no-store"});
+        if (!response.ok) throw new Error("Status API unavailable");
+        const data = await response.json();
+        const online = !!data.online;
+        $("online-label").textContent = online ? "ONLINE" : "OFFLINE";
+        $("online-label").style.color = online ? "var(--green)" : "#f38b8b";
+        $("hero-status").textContent = online ? "Online & ready" : "Currently offline";
+        $("status-text").textContent = online ? "Máy chủ đang hoạt động — vào chơi thôi!" : "Máy chủ hiện không phản hồi.";
+        $("players").textContent = online ? `${data.players?.online ?? 0} / ${data.players?.max ?? "?"}` : "0 / --";
+        $("version").textContent = online ? (data.version?.name_clean || data.version?.name || "Online") : "--";
+      } catch (error) {
+        $("online-label").textContent = "UNKNOWN";
+        $("online-label").style.color = "var(--muted)";
+        $("hero-status").textContent = "Status unavailable";
+        $("status-text").textContent = "Không thể tải trạng thái lúc này. Bạn vẫn có thể thử kết nối trực tiếp.";
+        $("players").textContent = "-- / --";
+        $("version").textContent = "--";
+      }
+    }
+    updateStatus();
+    setInterval(updateStatus, 30000);
+
+    function showToast(message) {
+      $("toast").textContent = message;
+      $("toast").classList.add("show");
+      setTimeout(() => $("toast").classList.remove("show"), 1900);
+    }
+    async function copyIP() {
+      try {
+        await navigator.clipboard.writeText(SERVER);
+        showToast("Đã copy IP: " + SERVER);
+      } catch {
+        showToast("IP server: " + SERVER);
+      }
+    }
+    $("copy-btn").addEventListener("click", copyIP);
+    $("copy-bottom").addEventListener("click", copyIP);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    const nav = $("nav");
+    window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 30), {passive:true});
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", () => {
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) target.scrollIntoView({behavior:"smooth"});
+      });
+    });
+  </script>
+</body>
+</html>
